@@ -1,6 +1,6 @@
 ---
 import Layout from "../layouts/Layout.astro";
-import PasswordInput from "../components/PasswordInput.astro";
+import 密码Input from "../components/密码Input.astro";
 import { apiJson, isUnauthorized, backendUnavailable } from "../lib/api";
 
 const cookies = Astro.request.headers.get("cookie") ?? "";
@@ -19,7 +19,7 @@ if (!meResult.is_admin) {
   return Astro.redirect("/");
 }
 
-type AdminUser = {
+type 管理User = {
   id: number;
   username: string;
   email: string;
@@ -28,15 +28,15 @@ type AdminUser = {
   created_at: string;
 };
 
-const users = (await apiJson<AdminUser[]>("/settings/users", { cookies }).catch(() => [] as AdminUser[])).sort(
+const users = (await apiJson<管理User[]>("/settings/users", { cookies }).catch(() => [] as 管理User[])).sort(
   (a, b) => new Date(a.created_at).getTime() - new Date(b.created_at).getTime()
 );
 ---
 
-<Layout title="Admin" user={{ username: meResult.username, is_admin: true }} activePage="admin">
+<Layout title="管理" user={{ username: meResult.username, is_admin: true }} activePage="admin">
   <main class="max-w-2xl mx-auto px-4 sm:px-6 py-10 space-y-6">
     <div>
-      <h1 class="text-lg font-semibold tracking-tight">Admin</h1>
+      <h1 class="text-lg font-semibold tracking-tight">管理</h1>
     </div>
 
     <section class="card p-6 pb-0">
@@ -67,7 +67,7 @@ const users = (await apiJson<AdminUser[]>("/settings/users", { cookies }).catch(
                         : "bg-zinc-100 text-zinc-500 dark:bg-white/5 dark:text-zinc-400",
                     ]}
                   >
-                    {u.is_admin ? "Admin" : "User"}
+                    {u.is_admin ? "管理" : "User"}
                   </span>
                 </td>
                 <td class="px-3 py-3 text-right align-top">
@@ -103,7 +103,7 @@ const users = (await apiJson<AdminUser[]>("/settings/users", { cookies }).catch(
                           data-user-id={u.id}
                           data-username={u.username}
                         >
-                          Delete
+                          删除
                         </button>
                       </div>
                     </div>
@@ -131,16 +131,16 @@ const users = (await apiJson<AdminUser[]>("/settings/users", { cookies }).catch(
           <div id="add-user-error" class="hidden bg-red-50 dark:bg-red-500/10 text-red-600 dark:text-red-400 text-sm px-3.5 py-2.5 rounded-lg mb-4"></div>
           <div class="space-y-3 max-w-sm">
             <div>
-              <label class="label" for="new-user-username">Username</label>
+              <label class="label" for="new-user-username">用户名</label>
               <input id="new-user-username" class="input" type="text" autocomplete="off" />
             </div>
             <div>
-              <label class="label" for="new-user-email">Email</label>
+              <label class="label" for="new-user-email">邮箱</label>
               <input id="new-user-email" class="input" type="email" autocomplete="off" />
             </div>
             <div>
-              <label class="label" for="new-user-password">Password</label>
-              <PasswordInput id="new-user-password" autocomplete="new-password" />
+              <label class="label" for="new-user-password">密码</label>
+              <密码Input id="new-user-password" autocomplete="new-password" />
             </div>
             <button id="add-user-btn" type="button" class="btn-primary">Add user</button>
           </div>
@@ -152,15 +152,15 @@ const users = (await apiJson<AdminUser[]>("/settings/users", { cookies }).catch(
   <div id="delete-user-modal" class="hidden fixed inset-0 z-50 flex items-center justify-center p-4">
     <div id="delete-user-modal-backdrop" class="absolute inset-0 bg-black/40"></div>
     <div class="relative card p-6 w-full max-w-sm">
-      <h2 class="text-base font-semibold mb-1.5">Delete <span id="delete-user-name"></span>?</h2>
+      <h2 class="text-base font-semibold mb-1.5">删除 <span id="delete-user-name"></span>?</h2>
       <p class="text-sm text-zinc-600 dark:text-zinc-300 mb-4">
         This permanently deletes their account and all of their data. This cannot be undone.
       </p>
       <div class="flex gap-2 justify-end">
-        <button id="delete-user-cancel-btn" type="button" class="btn-secondary">Cancel</button>
+        <button id="delete-user-cancel-btn" type="button" class="btn-secondary">取消</button>
         <button id="delete-user-confirm-btn" type="button"
           class="text-sm font-medium px-4 py-2.5 rounded-lg bg-red-600 hover:bg-red-500 text-white transition-colors">
-          Delete
+          删除
         </button>
       </div>
     </div>
@@ -173,9 +173,9 @@ const users = (await apiJson<AdminUser[]>("/settings/users", { cookies }).catch(
     const usersBody = document.getElementById("users-body")!;
     const addUserError = document.getElementById("add-user-error")!;
     const addUserBtn = document.getElementById("add-user-btn") as HTMLButtonElement;
-    const newUsernameInput = document.getElementById("new-user-username") as HTMLInputElement;
-    const newEmailInput = document.getElementById("new-user-email") as HTMLInputElement;
-    const newPasswordInput = document.getElementById("new-user-password") as HTMLInputElement;
+    const new用户名Input = document.getElementById("new-user-username") as HTMLInputElement;
+    const new邮箱Input = document.getElementById("new-user-email") as HTMLInputElement;
+    const new密码Input = document.getElementById("new-user-password") as HTMLInputElement;
 
     function userRowHtml(u: { id: number; username: string; email: string }) {
       const username = document.createElement("div");
@@ -202,7 +202,7 @@ const users = (await apiJson<AdminUser[]>("/settings/users", { cookies }).catch(
               </button>
               <div class="user-actions-menu hidden absolute right-0 top-full z-20 mt-1 w-40 py-1 card shadow-lg" role="menu">
                 <button type="button" role="menuitem" class="toggle-admin-btn flex w-full px-3 py-2 text-left text-sm text-zinc-600 dark:text-zinc-300 hover:bg-zinc-100 dark:hover:bg-white/5 transition-colors" data-user-id="${u.id}" data-is-admin="false">Make admin</button>
-                <button type="button" role="menuitem" class="delete-user-btn flex w-full px-3 py-2 text-left text-sm text-red-600 dark:text-red-400 hover:bg-red-50 dark:hover:bg-red-500/10 transition-colors" data-user-id="${u.id}" data-username="${username.innerHTML}">Delete</button>
+                <button type="button" role="menuitem" class="delete-user-btn flex w-full px-3 py-2 text-left text-sm text-red-600 dark:text-red-400 hover:bg-red-50 dark:hover:bg-red-500/10 transition-colors" data-user-id="${u.id}" data-username="${username.innerHTML}">删除</button>
               </div>
             </div>
           </td>
@@ -241,9 +241,9 @@ const users = (await apiJson<AdminUser[]>("/settings/users", { cookies }).catch(
     });
 
     addUserBtn?.addEventListener("click", async () => {
-      const username = newUsernameInput.value.trim();
-      const email = newEmailInput.value.trim();
-      const password = newPasswordInput.value;
+      const username = new用户名Input.value.trim();
+      const email = new邮箱Input.value.trim();
+      const password = new密码Input.value;
 
       addUserError.classList.add("hidden");
       if (!username || !email || !password) {
@@ -267,9 +267,9 @@ const users = (await apiJson<AdminUser[]>("/settings/users", { cookies }).catch(
         }
         const created = await res.json();
         usersBody.insertAdjacentHTML("beforeend", userRowHtml(created));
-        newUsernameInput.value = "";
-        newEmailInput.value = "";
-        newPasswordInput.value = "";
+        new用户名Input.value = "";
+        new邮箱Input.value = "";
+        new密码Input.value = "";
       } catch (e: any) {
         addUserError.textContent = e.message;
         addUserError.classList.remove("hidden");
@@ -282,14 +282,14 @@ const users = (await apiJson<AdminUser[]>("/settings/users", { cookies }).catch(
       const btn = (e.target as HTMLElement).closest(".toggle-admin-btn") as HTMLButtonElement | null;
       if (!btn) return;
       const userId = btn.dataset.userId;
-      const makeAdmin = btn.dataset.isAdmin !== "true";
+      const make管理 = btn.dataset.is管理 !== "true";
 
       btn.disabled = true;
       try {
         const res = await fetch(`/api/settings/users/${userId}`, {
           method: "PUT",
           headers: { "Content-Type": "application/json" },
-          body: JSON.stringify({ is_admin: makeAdmin }),
+          body: JSON.stringify({ is_admin: make管理 }),
         });
         if (!res.ok) {
           const text = await res.text();
@@ -301,16 +301,16 @@ const users = (await apiJson<AdminUser[]>("/settings/users", { cookies }).catch(
         const row = btn.closest("tr");
         const badge = row?.querySelector("[data-role-badge]");
         if (badge) {
-          badge.textContent = makeAdmin ? "Admin" : "User";
+          badge.textContent = make管理 ? "管理" : "User";
           badge.className = [
             "inline-flex items-center px-2 py-0.5 rounded-md text-xs font-medium",
-            makeAdmin
+            make管理
               ? "bg-accent/10 text-accent dark:bg-accent-light/10 dark:text-accent-light"
               : "bg-zinc-100 text-zinc-500 dark:bg-white/5 dark:text-zinc-400",
           ].join(" ");
         }
-        btn.textContent = makeAdmin ? "Remove admin" : "Make admin";
-        btn.dataset.isAdmin = String(makeAdmin);
+        btn.textContent = make管理 ? "Remove admin" : "Make admin";
+        btn.dataset.is管理 = String(make管理);
       } catch (err: any) {
         showToast(err.message ?? "Could not update user", "error");
       } finally {
@@ -322,27 +322,27 @@ const users = (await apiJson<AdminUser[]>("/settings/users", { cookies }).catch(
     const deleteUserModal = document.getElementById("delete-user-modal")!;
     const deleteUserName = document.getElementById("delete-user-name")!;
     const deleteUserConfirmBtn = document.getElementById("delete-user-confirm-btn") as HTMLButtonElement;
-    let pendingDeleteUserId: string | null = null;
+    let pending删除UserId: string | null = null;
 
-    function closeDeleteUserModal() {
+    function close删除UserModal() {
       deleteUserModal.classList.add("hidden");
-      pendingDeleteUserId = null;
+      pending删除UserId = null;
     }
 
     usersBody.addEventListener("click", (e) => {
       const btn = (e.target as HTMLElement).closest(".delete-user-btn") as HTMLButtonElement | null;
       if (!btn) return;
-      pendingDeleteUserId = btn.dataset.userId ?? null;
+      pending删除UserId = btn.dataset.userId ?? null;
       deleteUserName.textContent = btn.dataset.username ?? "";
       deleteUserModal.classList.remove("hidden");
     });
 
-    document.getElementById("delete-user-cancel-btn")?.addEventListener("click", closeDeleteUserModal);
-    document.getElementById("delete-user-modal-backdrop")?.addEventListener("click", closeDeleteUserModal);
+    document.getElementById("delete-user-cancel-btn")?.addEventListener("click", close删除UserModal);
+    document.getElementById("delete-user-modal-backdrop")?.addEventListener("click", close删除UserModal);
 
     deleteUserConfirmBtn?.addEventListener("click", async () => {
-      if (!pendingDeleteUserId) return;
-      const userId = pendingDeleteUserId;
+      if (!pending删除UserId) return;
+      const userId = pending删除UserId;
 
       deleteUserConfirmBtn.disabled = true;
       try {
@@ -354,10 +354,10 @@ const users = (await apiJson<AdminUser[]>("/settings/users", { cookies }).catch(
           throw new Error(detail);
         }
         document.querySelector(`[data-user-row="${userId}"]`)?.remove();
-        closeDeleteUserModal();
+        close删除UserModal();
       } catch (err: any) {
         showToast(err.message ?? "Could not delete user", "error");
-        closeDeleteUserModal();
+        close删除UserModal();
       } finally {
         deleteUserConfirmBtn.disabled = false;
       }
