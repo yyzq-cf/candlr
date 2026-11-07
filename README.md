@@ -329,3 +329,8 @@ Commit messages follow [Conventional Commits](https://www.conventionalcommits.or
 Candlr is licensed under the [GNU General Public License v3.0](LICENSE.md).
 
 You are free to use, modify, and distribute Candlr, provided that any derivative works are also released under the GPLv3.
+
+
+## 中文版
+
+本项目已汉化为中文界面，Docker 镜像：`ywsj/candlr:latest`
