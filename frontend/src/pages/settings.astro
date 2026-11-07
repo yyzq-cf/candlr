@@ -1,6 +1,6 @@
 ---
 import Layout from "../layouts/Layout.astro";
-import TwoFactor设置 from "../components/TwoFactor设置.astro";
+import TwoFactorSettings from "../components/TwoFactorSettings.astro";
 import 密码Input from "../components/密码Input.astro";
 import { apiJson, isUnauthorized, backendUnavailable } from "../lib/api";
 
@@ -109,7 +109,7 @@ const notifyTime = notifyPreferencesResult.status === "fulfilled" ? notifyPrefer
       <button id="open-add-event-type-btn" type="button" class="btn-secondary">添加事件类型</button>
     </section>
 
-    <TwoFactor设置 has密码={user.has_password} />
+    <TwoFactorSettings has密码={user.has_password} />
 
     <section class="card p-6">
       <h2 class="text-sm font-medium mb-1">密码</h2>
