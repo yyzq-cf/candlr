@@ -3,7 +3,7 @@ import Layout from "../layouts/Layout.astro";
 import ThemeToggle from "../components/ThemeToggle.astro";
 import Logo from "../components/Logo.astro";
 import AuthHero from "../components/AuthHero.astro";
-import 密码Input from "../components/密码Input.astro";
+import PasswordInput from "../components/PasswordInput.astro";
 import { apiJson } from "../lib/api";
 
 if (Astro.cookies.get("candlr_token")?.value) {
@@ -80,11 +80,11 @@ const can注册 = registration.enabled && !oidcConfig.disable_password_login;
               </div>
               <div>
                 <label class="label" for="password">密码</label>
-                <密码Input id="password" autocomplete="new-password" placeholder="••••••••" />
+                <PasswordInput id="password" autocomplete="new-password" placeholder="••••••••" />
               </div>
               <div>
                 <label class="label" for="confirm-password">确认密码</label>
-                <密码Input id="confirm-password" autocomplete="new-password" placeholder="••••••••" />
+                <PasswordInput id="confirm-password" autocomplete="new-password" placeholder="••••••••" />
               </div>
               <button id="register-btn" class="btn-primary w-full mt-1">创建账户</button>
             </div>
