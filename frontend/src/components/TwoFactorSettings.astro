@@ -1,5 +1,5 @@
 ---
-import 密码Input from "./密码Input.astro";
+import PasswordInput from "./PasswordInput.astro";
 interface Props { has密码: boolean }
 const { has密码 } = Astro.props;
 ---
@@ -12,7 +12,7 @@ const { has密码 } = Astro.props;
       <form id="mfa-form" class="hidden space-y-4 max-w-sm">
         <div>
           <label class="label" for="mfa-password">当前密码</label>
-          <密码Input id="mfa-password" autocomplete="current-password" required />
+          <PasswordInput id="mfa-password" autocomplete="current-password" required />
         </div>
         <div id="mfa-code-field" class="hidden">
           <label class="label" for="mfa-code">Authenticator or recovery code</label>
