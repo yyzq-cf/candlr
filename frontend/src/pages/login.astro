@@ -3,7 +3,7 @@ import Layout from "../layouts/Layout.astro";
 import ThemeToggle from "../components/ThemeToggle.astro";
 import Logo from "../components/Logo.astro";
 import AuthHero from "../components/AuthHero.astro";
-import 密码Input from "../components/密码Input.astro";
+import PasswordInput from "../components/PasswordInput.astro";
 import { apiJson } from "../lib/api";
 
 if (Astro.cookies.get("candlr_token")?.value) {
@@ -85,7 +85,7 @@ const passwordReset = await apiJson<{ enabled: boolean }>("/auth/password-reset-
                     </a>
                   )}
                 </div>
-                <密码Input id="password" autocomplete="current-password" placeholder="••••••••" tabindex={2} />
+                <PasswordInput id="password" autocomplete="current-password" placeholder="••••••••" tabindex={2} />
               </div>
               <label class="flex items-center gap-2 text-sm cursor-pointer">
                 <input type="checkbox" id="remember" class="toggle" tabindex="3" />
