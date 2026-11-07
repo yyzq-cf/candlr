@@ -1,9 +1,9 @@
 ---
 import { initials } from "../lib/avatar.js";
 import { MONTH_NAMES, splitNumber } from "../lib/dates.js";
-import { milestone, type 仪表盘Entry } from "../lib/dashboard";
+import { milestone, type DashboardEntry } from "../lib/dashboard";
 
-interface Props { entry: 仪表盘Entry; prominent?: boolean; past?: boolean }
+interface Props { entry: DashboardEntry; prominent?: boolean; past?: boolean }
 const { entry: { person, event }, prominent = false, past = false } = Astro.props;
 const occasion = milestone(event, new Date(), past ? -event.days_since : event.days_until);
 const occasionParts = occasion ? splitNumber(occasion) : null;
