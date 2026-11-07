@@ -1,7 +1,7 @@
 ---
 import Layout from "../layouts/Layout.astro";
-import TwoFactorSettings from "../components/TwoFactorSettings.astro";
-import PasswordInput from "../components/PasswordInput.astro";
+import TwoFactor设置 from "../components/TwoFactor设置.astro";
+import 密码Input from "../components/密码Input.astro";
 import { apiJson, isUnauthorized, backendUnavailable } from "../lib/api";
 
 const cookies = Astro.request.headers.get("cookie") ?? "";
@@ -39,14 +39,14 @@ const eventTypes = eventTypesResult.status === "fulfilled" ? eventTypesResult.va
 const carddav = carddavResult.status === "fulfilled" ? carddavResult.value : null;
 const channels = channelsResult.status === "fulfilled" ? channelsResult.value : [];
 const vapidPublicKey = vapidResult.status === "fulfilled" ? vapidResult.value.public_key : null;
-const jsonExample = '{"people": [{"name": "Alex", "events": [{"type": "Birthday", "month": 3, "day": 5, "year": 1990}]}]}';
+const jsonExample = '{"people": [{"name": "Alex", "events": [{"type": "生日", "month": 3, "day": 5, "year": 1990}]}]}';
 const notifyTime = notifyPreferencesResult.status === "fulfilled" ? notifyPreferencesResult.value.notify_time : "09:00";
 ---
 
-<Layout title="Settings" user={{ username: user.username, is_admin: user.is_admin }} activePage="settings">
+<Layout title="设置" user={{ username: user.username, is_admin: user.is_admin }} activePage="settings">
   <main class="max-w-2xl mx-auto px-4 sm:px-6 py-10 space-y-6">
     <div>
-      <h1 class="text-lg font-semibold tracking-tight">Settings</h1>
+      <h1 class="text-lg font-semibold tracking-tight">设置</h1>
       <p class="text-sm text-zinc-600 dark:text-zinc-300 mt-1">Manage your account.</p>
     </div>
 
@@ -54,20 +54,20 @@ const notifyTime = notifyPreferencesResult.status === "fulfilled" ? notifyPrefer
       <h2 class="text-sm font-medium mb-4">Account</h2>
       <dl class="space-y-3 text-sm">
         <div class="flex items-center justify-between gap-4">
-          <dt class="text-zinc-600 dark:text-zinc-300">Username</dt>
+          <dt class="text-zinc-600 dark:text-zinc-300">用户名</dt>
           <dd class="font-medium">{user.username}</dd>
         </div>
         <div class="flex items-center justify-between gap-4">
-          <dt class="text-zinc-600 dark:text-zinc-300">Email</dt>
+          <dt class="text-zinc-600 dark:text-zinc-300">邮箱</dt>
           <dd class="font-medium">{user.email}</dd>
         </div>
       </dl>
     </section>
 
     <section class="card p-6">
-      <h2 class="text-sm font-medium mb-1">Events</h2>
+      <h2 class="text-sm font-medium mb-1">事件</h2>
       <p class="text-sm text-zinc-600 dark:text-zinc-300 mb-4">
-        The kinds of dates you can track, and how often each comes around. Birthday and Anniversary are built in, repeat every year, and cannot be deleted. Add your own, repeating as often as you like: every year, every month, every 37 days, every 5 years.
+        The kinds of dates you can track, and how often each comes around. 生日 and 纪念日 are built in, repeat every year, and cannot be deleted. Add your own, repeating as often as you like: every year, every month, every 37 days, every 5 years.
       </p>
 
       <ul id="event-type-list" class="space-y-1.5 mb-4">
@@ -94,8 +94,8 @@ const notifyTime = notifyPreferencesResult.status === "fulfilled" ? notifyPrefer
               class="icon-button text-zinc-400 hover:text-red-600 dark:hover:text-red-400 flex-shrink-0 p-1"
               data-delete-event-type={et.id}
               data-name={et.name}
-              title="Delete"
-              aria-label={`Delete ${et.name}`}
+              title="删除"
+              aria-label={`删除 ${et.name}`}
             >
               <svg xmlns="http://www.w3.org/2000/svg" class="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
                 <path stroke-linecap="round" stroke-linejoin="round" d="M6 18L18 6M6 6l12 12" />
@@ -106,13 +106,13 @@ const notifyTime = notifyPreferencesResult.status === "fulfilled" ? notifyPrefer
       </ul>
 
       <div id="event-type-error" class="hidden bg-red-50 dark:bg-red-500/10 text-red-600 dark:text-red-400 text-sm px-3.5 py-2.5 rounded-lg mb-3"></div>
-      <button id="open-add-event-type-btn" type="button" class="btn-secondary">Add event type</button>
+      <button id="open-add-event-type-btn" type="button" class="btn-secondary">添加事件类型</button>
     </section>
 
-    <TwoFactorSettings hasPassword={user.has_password} />
+    <TwoFactor设置 has密码={user.has_password} />
 
     <section class="card p-6">
-      <h2 class="text-sm font-medium mb-1">Password</h2>
+      <h2 class="text-sm font-medium mb-1">密码</h2>
       {user.has_password ? (
         <>
           <p class="text-sm text-zinc-600 dark:text-zinc-300 mb-4">Change the password you use to sign in.</p>
@@ -120,18 +120,18 @@ const notifyTime = notifyPreferencesResult.status === "fulfilled" ? notifyPrefer
           <div id="password-success" class="hidden bg-emerald-50 dark:bg-emerald-500/10 text-emerald-600 dark:text-emerald-400 text-sm px-3.5 py-2.5 rounded-lg mb-4"></div>
           <div class="space-y-4 max-w-sm">
             <div>
-              <label class="label" for="current-password">Current password</label>
-              <PasswordInput id="current-password" autocomplete="current-password" />
+              <label class="label" for="current-password">当前密码</label>
+              <密码Input id="current-password" autocomplete="current-password" />
             </div>
             <div>
-              <label class="label" for="new-password">New password</label>
-              <PasswordInput id="new-password" autocomplete="new-password" />
+              <label class="label" for="new-password">新密码</label>
+              <密码Input id="new-password" autocomplete="new-password" />
             </div>
             <div>
-              <label class="label" for="confirm-new-password">Confirm new password</label>
-              <PasswordInput id="confirm-new-password" autocomplete="new-password" />
+              <label class="label" for="confirm-new-password">确认新密码</label>
+              <密码Input id="confirm-new-password" autocomplete="new-password" />
             </div>
-            <button id="password-btn" class="btn-secondary">Update password</button>
+            <button id="password-btn" class="btn-secondary">更新密码</button>
           </div>
         </>
       ) : (
@@ -163,7 +163,7 @@ const notifyTime = notifyPreferencesResult.status === "fulfilled" ? notifyPrefer
           <summary class="flex items-center justify-between gap-2 cursor-pointer list-none [&::-webkit-details-marker]:hidden">
             <span class="flex items-center gap-2 text-sm font-medium">
               <input type="checkbox" class="toggle" id="email-enabled" onclick="event.stopPropagation()" />
-              Email
+              邮箱
             </span>
             <svg xmlns="http://www.w3.org/2000/svg" class="w-4 h-4 text-zinc-400 flex-shrink-0 transition-transform group-open:rotate-180" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
               <path stroke-linecap="round" stroke-linejoin="round" d="M19 9l-7 7-7-7" />
@@ -201,7 +201,7 @@ const notifyTime = notifyPreferencesResult.status === "fulfilled" ? notifyPrefer
               </div>
               <div>
                 <label class="label" for="ntfy-access-token">Access token (optional)</label>
-                <PasswordInput id="ntfy-access-token" />
+                <密码Input id="ntfy-access-token" />
               </div>
             </div>
             <div id="ntfy-status" class="hidden text-sm px-3.5 py-2.5 rounded-lg mb-3"></div>
@@ -249,7 +249,7 @@ const notifyTime = notifyPreferencesResult.status === "fulfilled" ? notifyPrefer
             <div class="space-y-3 max-w-sm mb-3">
               <div>
                 <label class="label" for="telegram-bot-token">Bot token</label>
-                <PasswordInput id="telegram-bot-token" />
+                <密码Input id="telegram-bot-token" />
               </div>
               <div>
                 <label class="label" for="telegram-chat-id">Chat ID</label>
@@ -258,8 +258,8 @@ const notifyTime = notifyPreferencesResult.status === "fulfilled" ? notifyPrefer
             </div>
             <div id="telegram-status" class="hidden text-sm px-3.5 py-2.5 rounded-lg mb-3"></div>
             <div class="flex gap-2">
-              <button class="btn-secondary text-xs px-3 py-1.5" data-save="telegram">Save</button>
-              <button class="btn-ghost text-xs px-3 py-1.5" data-test="telegram">Send test</button>
+              <button class="btn-secondary text-xs px-3 py-1.5" data-save="telegram">保存</button>
+              <button class="btn-ghost text-xs px-3 py-1.5" data-test="telegram">发送测试</button>
             </div>
           </div>
         </details>
@@ -282,13 +282,13 @@ const notifyTime = notifyPreferencesResult.status === "fulfilled" ? notifyPrefer
               </div>
               <div>
                 <label class="label" for="pushover-api-token">API token</label>
-                <PasswordInput id="pushover-api-token" />
+                <密码Input id="pushover-api-token" />
               </div>
             </div>
             <div id="pushover-status" class="hidden text-sm px-3.5 py-2.5 rounded-lg mb-3"></div>
             <div class="flex gap-2">
-              <button class="btn-secondary text-xs px-3 py-1.5" data-save="pushover">Save</button>
-              <button class="btn-ghost text-xs px-3 py-1.5" data-test="pushover">Send test</button>
+              <button class="btn-secondary text-xs px-3 py-1.5" data-save="pushover">保存</button>
+              <button class="btn-ghost text-xs px-3 py-1.5" data-test="pushover">发送测试</button>
             </div>
           </div>
         </details>
@@ -311,7 +311,7 @@ const notifyTime = notifyPreferencesResult.status === "fulfilled" ? notifyPrefer
               </div>
               <div>
                 <label class="label" for="gotify-app-token">App token</label>
-                <PasswordInput id="gotify-app-token" />
+                <密码Input id="gotify-app-token" />
               </div>
               <div>
                 <label class="label" for="gotify-priority">Priority (optional, 0-10)</label>
@@ -333,8 +333,8 @@ const notifyTime = notifyPreferencesResult.status === "fulfilled" ? notifyPrefer
           </p>
           <div id="webpush-status" class="hidden text-sm px-3.5 py-2.5 rounded-lg mb-3"></div>
           <div class="flex gap-2">
-            <button class="btn-secondary text-xs px-3 py-1.5" id="webpush-toggle-btn">Enable on this device</button>
-            <button class="btn-ghost text-xs px-3 py-1.5" id="webpush-test-btn" hidden>Send test</button>
+            <button class="btn-secondary text-xs px-3 py-1.5" id="webpush-toggle-btn">在此设备上启用</button>
+            <button class="btn-ghost text-xs px-3 py-1.5" id="webpush-test-btn" hidden>发送测试</button>
           </div>
         </div>
       </div>
@@ -343,17 +343,17 @@ const notifyTime = notifyPreferencesResult.status === "fulfilled" ? notifyPrefer
     <section id="shares" class="card p-6">
       <h2 class="text-sm font-medium mb-1">Shared calendars</h2>
       <p class="text-sm text-zinc-600 dark:text-zinc-300 mb-4">
-        Read-only web links to your calendar that work without logging in. Each one shows only the event types you picked, and never notes. Create one from the Share button on the Calendar page. Deleting a link stops it working straight away.
+        Read-only web links to your calendar that work without logging in. Each one shows only the event types you picked, and never notes. Create one from the Share button on the 日历 page. Deleting a link stops it working straight away.
       </p>
       <ul id="share-list" class="space-y-1.5"></ul>
       <p id="share-empty" class="hidden text-sm text-zinc-500 dark:text-zinc-400">
-        Nothing is shared yet. <a href="/calendar" class="font-medium hover:underline">Open the calendar</a> to create a link.
+        暂无分享内容。 <a href="/calendar" class="font-medium hover:underline">打开日历</a> to create a link.
       </p>
       <div id="share-error" class="hidden text-sm px-3.5 py-2.5 rounded-lg bg-red-50 dark:bg-red-500/10 text-red-600 dark:text-red-400"></div>
     </section>
 
     <section class="card p-6">
-      <h2 class="text-sm font-medium mb-1">Import and export</h2>
+      <h2 class="text-sm font-medium mb-1">导入和导出</h2>
       <p class="text-sm text-zinc-600 dark:text-zinc-300 mb-4">
         Download every card and date as a file, or add cards from one. Photos are not included.
       </p>
@@ -401,7 +401,7 @@ const notifyTime = notifyPreferencesResult.status === "fulfilled" ? notifyPrefer
     <section class="card p-6">
       <h2 class="text-sm font-medium mb-1">Address book sync</h2>
       <p class="text-sm text-zinc-600 dark:text-zinc-300 mb-4">
-        Keep your cards in step with a CardDAV address book such as Radicale, Baïkal or Nextcloud. Birthdays and
+        Keep your cards in step with a CardDAV address book such as Radicale, Baïkal or Nextcloud. 生日s and
         anniversaries are pulled in regularly. The address book is the master copy: names and dates are overwritten by
         the next sync, while your notes and reminder settings stay. Photos are not synced.
       </p>
@@ -412,11 +412,11 @@ const notifyTime = notifyPreferencesResult.status === "fulfilled" ? notifyPrefer
         </div>
         <div class="grid grid-cols-1 sm:grid-cols-2 gap-3">
           <div>
-            <label class="label" for="carddav-username">Username</label>
+            <label class="label" for="carddav-username">用户名</label>
             <input id="carddav-username" class="input" type="text" autocomplete="off" />
           </div>
           <div>
-            <label class="label" for="carddav-password">Password</label>
+            <label class="label" for="carddav-password">密码</label>
             <input id="carddav-password" class="input" type="password" autocomplete="new-password" />
           </div>
         </div>
@@ -425,7 +425,7 @@ const notifyTime = notifyPreferencesResult.status === "fulfilled" ? notifyPrefer
         </p>
       </div>
       <div class="flex flex-wrap gap-2 mt-4">
-        <button id="carddav-save-btn" type="button" class="btn-primary">Save and sync</button>
+        <button id="carddav-save-btn" type="button" class="btn-primary">保存 and sync</button>
         <button id="carddav-sync-btn" type="button" class="btn-secondary hidden">Sync now</button>
         <button id="carddav-disconnect-btn" type="button" class="btn-secondary hidden">Disconnect</button>
       </div>
@@ -439,7 +439,7 @@ const notifyTime = notifyPreferencesResult.status === "fulfilled" ? notifyPrefer
         Permanently deletes every person and date you're tracking. Your account and settings are kept. This cannot be undone.
       </p>
       <button id="open-delete-events-modal" class="text-sm font-medium px-4 py-2.5 rounded-lg bg-red-600 hover:bg-red-500 text-white transition-colors">
-        Delete all my events
+        删除 all my events
       </button>
     </section>
 
@@ -449,7 +449,7 @@ const notifyTime = notifyPreferencesResult.status === "fulfilled" ? notifyPrefer
         Permanently delete your account and all of its data. This cannot be undone.
       </p>
       <button id="open-delete-modal" class="text-sm font-medium px-4 py-2.5 rounded-lg bg-red-600 hover:bg-red-500 text-white transition-colors">
-        Delete my account
+        删除 my account
       </button>
     </section>
   </main>
@@ -459,7 +459,7 @@ const notifyTime = notifyPreferencesResult.status === "fulfilled" ? notifyPrefer
     <div class="relative bg-surface dark:bg-surface-dark w-full min-w-0 max-w-full sm:max-w-md rounded-t-2xl sm:rounded-2xl min-h-[min(30rem,92dvh)] max-h-[92dvh] overflow-y-auto p-6" role="dialog" aria-modal="true" aria-labelledby="add-event-type-title">
       <div class="flex items-center justify-between mb-4">
         <h2 id="add-event-type-title" class="text-base font-semibold">Add an event type</h2>
-        <button type="button" id="add-event-type-close-btn" class="icon-button btn-ghost p-1.5" aria-label="Close">
+        <button type="button" id="add-event-type-close-btn" class="icon-button btn-ghost p-1.5" aria-label="关闭">
           <svg xmlns="http://www.w3.org/2000/svg" class="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
             <path stroke-linecap="round" stroke-linejoin="round" d="M6 18L18 6M6 6l12 12" />
           </svg>
@@ -486,7 +486,7 @@ const notifyTime = notifyPreferencesResult.status === "fulfilled" ? notifyPrefer
         </div>
       </div>
       <div class="flex gap-2 justify-end mt-5">
-        <button id="add-event-type-cancel-btn" type="button" class="btn-secondary">Cancel</button>
+        <button id="add-event-type-cancel-btn" type="button" class="btn-secondary">取消</button>
         <button id="add-event-type-btn" type="button" class="btn-primary">Add</button>
       </div>
     </div>
@@ -504,7 +504,7 @@ const notifyTime = notifyPreferencesResult.status === "fulfilled" ? notifyPrefer
         Also delete the cards that were synced
       </label>
       <div class="flex gap-2 justify-end">
-        <button id="carddav-disconnect-cancel-btn" type="button" class="btn-secondary">Cancel</button>
+        <button id="carddav-disconnect-cancel-btn" type="button" class="btn-secondary">取消</button>
         <button id="carddav-disconnect-confirm-btn" type="button"
           class="text-sm font-medium px-4 py-2.5 rounded-lg bg-red-600 hover:bg-red-500 text-white transition-colors">
           Disconnect
@@ -517,15 +517,15 @@ const notifyTime = notifyPreferencesResult.status === "fulfilled" ? notifyPrefer
   <div id="delete-share-modal" class="hidden fixed inset-0 z-50 flex items-end sm:items-center justify-center">
     <div id="delete-share-backdrop" class="absolute inset-0 bg-black/40"></div>
     <div class="relative bg-surface dark:bg-surface-dark w-full sm:max-w-sm rounded-t-2xl sm:rounded-2xl p-6 pb-[calc(1.5rem+env(safe-area-inset-bottom))] sm:pb-6">
-      <h2 class="text-base font-semibold mb-1.5">Delete <span id="delete-share-name"></span>?</h2>
+      <h2 class="text-base font-semibold mb-1.5">删除 <span id="delete-share-name"></span>?</h2>
       <p class="text-sm text-zinc-600 dark:text-zinc-300 mb-4">
         Anyone with this link will no longer be able to see the calendar. This cannot be undone.
       </p>
       <div class="flex gap-2 justify-end">
-        <button id="delete-share-cancel-btn" type="button" class="btn-secondary">Cancel</button>
+        <button id="delete-share-cancel-btn" type="button" class="btn-secondary">取消</button>
         <button id="delete-share-confirm-btn" type="button"
           class="text-sm font-medium px-4 py-2.5 rounded-lg bg-red-600 hover:bg-red-500 text-white transition-colors">
-          Delete
+          删除
         </button>
       </div>
     </div>
@@ -534,15 +534,15 @@ const notifyTime = notifyPreferencesResult.status === "fulfilled" ? notifyPrefer
   <div id="delete-event-type-modal" class="hidden fixed inset-0 z-50 flex items-center justify-center p-4">
     <div id="delete-event-type-backdrop" class="absolute inset-0 bg-black/40"></div>
     <div class="relative card p-6 w-full max-w-sm">
-      <h2 class="text-base font-semibold mb-1.5">Delete <span id="delete-event-type-name"></span>?</h2>
+      <h2 class="text-base font-semibold mb-1.5">删除 <span id="delete-event-type-name"></span>?</h2>
       <p class="text-sm text-zinc-600 dark:text-zinc-300 mb-4">
         This also deletes every date tracked under this type. This cannot be undone.
       </p>
       <div class="flex gap-2 justify-end">
-        <button id="delete-event-type-cancel-btn" type="button" class="btn-secondary">Cancel</button>
+        <button id="delete-event-type-cancel-btn" type="button" class="btn-secondary">取消</button>
         <button id="delete-event-type-confirm-btn" type="button"
           class="text-sm font-medium px-4 py-2.5 rounded-lg bg-red-600 hover:bg-red-500 text-white transition-colors">
-          Delete
+          删除
         </button>
       </div>
     </div>
@@ -551,7 +551,7 @@ const notifyTime = notifyPreferencesResult.status === "fulfilled" ? notifyPrefer
   <div id="delete-events-modal" class="hidden fixed inset-0 z-50 flex items-center justify-center p-4">
     <div id="delete-events-modal-backdrop" class="absolute inset-0 bg-black/40"></div>
     <div class="relative card p-6 w-full max-w-sm">
-      <h2 class="text-base font-semibold mb-1.5">Delete all events?</h2>
+      <h2 class="text-base font-semibold mb-1.5">删除 all events?</h2>
       <p class="text-sm text-zinc-600 dark:text-zinc-300 mb-4">
         This permanently deletes every person and date you're tracking. Your account and settings are kept. This cannot be undone.
       </p>
@@ -559,14 +559,14 @@ const notifyTime = notifyPreferencesResult.status === "fulfilled" ? notifyPrefer
       {user.has_password && (
         <div class="mb-4">
           <label class="label" for="delete-events-password">Confirm your password</label>
-          <PasswordInput id="delete-events-password" autocomplete="current-password" />
+          <密码Input id="delete-events-password" autocomplete="current-password" />
         </div>
       )}
       <div class="flex gap-2 justify-end">
-        <button id="delete-events-cancel-btn" type="button" class="btn-secondary">Cancel</button>
+        <button id="delete-events-cancel-btn" type="button" class="btn-secondary">取消</button>
         <button id="delete-events-confirm-btn" type="button"
           class="text-sm font-medium px-4 py-2.5 rounded-lg bg-red-600 hover:bg-red-500 text-white transition-colors">
-          Delete all events
+          删除 all events
         </button>
       </div>
     </div>
@@ -575,7 +575,7 @@ const notifyTime = notifyPreferencesResult.status === "fulfilled" ? notifyPrefer
   <div id="delete-modal" class="hidden fixed inset-0 z-50 flex items-center justify-center p-4">
     <div id="delete-modal-backdrop" class="absolute inset-0 bg-black/40"></div>
     <div class="relative card p-6 w-full max-w-sm">
-      <h2 class="text-base font-semibold mb-1.5">Delete account?</h2>
+      <h2 class="text-base font-semibold mb-1.5">删除 account?</h2>
       <p class="text-sm text-zinc-600 dark:text-zinc-300 mb-4">
         This permanently deletes your account and all of its data. This cannot be undone.
       </p>
@@ -583,36 +583,36 @@ const notifyTime = notifyPreferencesResult.status === "fulfilled" ? notifyPrefer
       {user.has_password && (
         <div class="mb-4">
           <label class="label" for="delete-password">Confirm your password</label>
-          <PasswordInput id="delete-password" autocomplete="current-password" />
+          <密码Input id="delete-password" autocomplete="current-password" />
         </div>
       )}
       <div class="flex gap-2 justify-end">
-        <button id="delete-cancel-btn" type="button" class="btn-secondary">Cancel</button>
+        <button id="delete-cancel-btn" type="button" class="btn-secondary">取消</button>
         <button id="delete-confirm-btn" type="button"
           class="text-sm font-medium px-4 py-2.5 rounded-lg bg-red-600 hover:bg-red-500 text-white transition-colors">
-          Delete account
+          删除 account
         </button>
       </div>
     </div>
   </div>
 
-  <script define:vars={{ hasPassword: user.has_password, initialChannels: channels, vapidPublicKey, notifyTime, initialCarddav: carddav }}>
+  <script define:vars={{ has密码: user.has_password, initialChannels: channels, vapidPublicKey, notifyTime, initialCarddav: carddav }}>
     // ── Password change ──
     const pwBtn = document.getElementById("password-btn");
     const pwError = document.getElementById("password-error");
     const pwSuccess = document.getElementById("password-success");
 
     pwBtn?.addEventListener("click", async () => {
-      const currentPassword = document.getElementById("current-password").value;
-      const newPassword = document.getElementById("new-password").value;
-      const confirmNewPassword = document.getElementById("confirm-new-password").value;
+      const current密码 = document.getElementById("current-password").value;
+      const new密码 = document.getElementById("new-password").value;
+      const confirmNew密码 = document.getElementById("confirm-new-password").value;
 
       pwError.classList.add("hidden");
       pwSuccess.classList.add("hidden");
 
-      if (!currentPassword || !newPassword || !confirmNewPassword) return;
-      if (newPassword !== confirmNewPassword) {
-        pwError.textContent = "New passwords do not match";
+      if (!current密码 || !new密码 || !confirmNew密码) return;
+      if (new密码 !== confirmNew密码) {
+        pwError.textContent = "新密码s do not match";
         pwError.classList.remove("hidden");
         return;
       }
@@ -624,7 +624,7 @@ const notifyTime = notifyPreferencesResult.status === "fulfilled" ? notifyPrefer
         const res = await fetch("/api/auth/change-password", {
           method: "POST",
           headers: { "Content-Type": "application/json" },
-          body: JSON.stringify({ current_password: currentPassword, new_password: newPassword }),
+          body: JSON.stringify({ current_password: current密码, new_password: new密码 }),
         });
         if (!res.ok) {
           const text = await res.text();
@@ -635,14 +635,14 @@ const notifyTime = notifyPreferencesResult.status === "fulfilled" ? notifyPrefer
         document.getElementById("current-password").value = "";
         document.getElementById("new-password").value = "";
         document.getElementById("confirm-new-password").value = "";
-        pwSuccess.textContent = "Password updated.";
+        pwSuccess.textContent = "密码 updated.";
         pwSuccess.classList.remove("hidden");
       } catch (e) {
         pwError.textContent = e.message;
         pwError.classList.remove("hidden");
       } finally {
         pwBtn.disabled = false;
-        pwBtn.textContent = "Update password";
+        pwBtn.textContent = "更新密码";
       }
     });
 
@@ -712,7 +712,7 @@ const notifyTime = notifyPreferencesResult.status === "fulfilled" ? notifyPrefer
           </button>
           <span class="text-sm flex-1 truncate">${name.innerHTML}</span>
           ${cadence}
-          ${!et.is_default ? `<button class="icon-button text-zinc-400 hover:text-red-600 dark:hover:text-red-400 flex-shrink-0 p-1" data-delete-event-type="${et.id}" data-name="${name.innerHTML}" title="Delete" aria-label="Delete ${name.innerHTML}">
+          ${!et.is_default ? `<button class="icon-button text-zinc-400 hover:text-red-600 dark:hover:text-red-400 flex-shrink-0 p-1" data-delete-event-type="${et.id}" data-name="${name.innerHTML}" title="删除" aria-label="删除 ${name.innerHTML}">
             <svg xmlns="http://www.w3.org/2000/svg" class="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
               <path stroke-linecap="round" stroke-linejoin="round" d="M6 18L18 6M6 6l12 12" />
             </svg>
@@ -768,38 +768,38 @@ const notifyTime = notifyPreferencesResult.status === "fulfilled" ? notifyPrefer
     const deleteEventTypeModal = document.getElementById("delete-event-type-modal");
     const deleteEventTypeName = document.getElementById("delete-event-type-name");
     const deleteEventTypeConfirmBtn = document.getElementById("delete-event-type-confirm-btn");
-    let pendingDeleteEventTypeId = null;
+    let pending删除EventTypeId = null;
 
     eventTypeList?.addEventListener("click", (e) => {
       const btn = e.target.closest("[data-delete-event-type]");
       if (!btn) return;
-      pendingDeleteEventTypeId = btn.dataset.deleteEventType;
+      pending删除EventTypeId = btn.dataset.deleteEventType;
       deleteEventTypeName.textContent = btn.dataset.name;
       deleteEventTypeModal.classList.remove("hidden");
     });
 
-    function closeDeleteEventTypeModal() {
+    function close删除EventTypeModal() {
       deleteEventTypeModal.classList.add("hidden");
-      pendingDeleteEventTypeId = null;
+      pending删除EventTypeId = null;
     }
-    document.getElementById("delete-event-type-cancel-btn")?.addEventListener("click", closeDeleteEventTypeModal);
-    document.getElementById("delete-event-type-backdrop")?.addEventListener("click", closeDeleteEventTypeModal);
+    document.getElementById("delete-event-type-cancel-btn")?.addEventListener("click", close删除EventTypeModal);
+    document.getElementById("delete-event-type-backdrop")?.addEventListener("click", close删除EventTypeModal);
 
     deleteEventTypeConfirmBtn?.addEventListener("click", async () => {
-      if (!pendingDeleteEventTypeId) return;
+      if (!pending删除EventTypeId) return;
       deleteEventTypeConfirmBtn.disabled = true;
       try {
-        const res = await fetch(`/api/event-types/${pendingDeleteEventTypeId}`, { method: "DELETE" });
+        const res = await fetch(`/api/event-types/${pending删除EventTypeId}`, { method: "DELETE" });
         if (!res.ok) {
           const data = await res.json().catch(() => ({}));
           throw new Error(data.detail || "Could not delete event type");
         }
-        eventTypeList.querySelector(`[data-event-type-id="${pendingDeleteEventTypeId}"]`)?.remove();
-        closeDeleteEventTypeModal();
+        eventTypeList.querySelector(`[data-event-type-id="${pending删除EventTypeId}"]`)?.remove();
+        close删除EventTypeModal();
       } catch (e) {
         eventTypeError.textContent = e.message;
         eventTypeError.classList.remove("hidden");
-        closeDeleteEventTypeModal();
+        close删除EventTypeModal();
       } finally {
         deleteEventTypeConfirmBtn.disabled = false;
       }
@@ -807,15 +807,15 @@ const notifyTime = notifyPreferencesResult.status === "fulfilled" ? notifyPrefer
 
     // ── Address book sync (CardDAV) ──
     const carddavUrl = document.getElementById("carddav-url");
-    const carddavUsername = document.getElementById("carddav-username");
-    const carddavPassword = document.getElementById("carddav-password");
-    const carddavSaveBtn = document.getElementById("carddav-save-btn");
+    const carddav用户名 = document.getElementById("carddav-username");
+    const carddav密码 = document.getElementById("carddav-password");
+    const carddav保存Btn = document.getElementById("carddav-save-btn");
     const carddavSyncBtn = document.getElementById("carddav-sync-btn");
     const carddavDisconnectBtn = document.getElementById("carddav-disconnect-btn");
     const carddavStatus = document.getElementById("carddav-status");
     const carddavErrors = document.getElementById("carddav-errors");
     const carddavDisconnectModal = document.getElementById("carddav-disconnect-modal");
-    const carddavDeleteCards = document.getElementById("carddav-delete-cards");
+    const carddav删除Cards = document.getElementById("carddav-delete-cards");
     const carddavConfirmBtn = document.getElementById("carddav-disconnect-confirm-btn");
 
     function carddavSay(message, isError) {
@@ -837,8 +837,8 @@ const notifyTime = notifyPreferencesResult.status === "fulfilled" ? notifyPrefer
       const connected = !!account;
       carddavSyncBtn.classList.toggle("hidden", !connected);
       carddavDisconnectBtn.classList.toggle("hidden", !connected);
-      carddavSaveBtn.textContent = connected ? "Save changes" : "Save and sync";
-      carddavPassword.placeholder = account?.has_password ? "Saved. Leave blank to keep" : "";
+      carddav保存Btn.textContent = connected ? "保存 changes" : "保存 and sync";
+      carddav密码.placeholder = account?.has_password ? "保存d. Leave blank to keep" : "";
       carddavClearStatus();
       if (!account) return;
       const result = account.last_result;
@@ -866,7 +866,7 @@ const notifyTime = notifyPreferencesResult.status === "fulfilled" ? notifyPrefer
     async function carddavRequest(path, options) {
       const res = await fetch(`/api/carddav${path}`, options);
       const data = await res.json().catch(() => ({}));
-      if (!res.ok) throw new Error(data.detail?.[0]?.msg || data.detail || "Something went wrong");
+      if (!res.ok) throw new Error(data.detail?.[0]?.msg || data.detail || "出了点问题");
       return data;
     }
 
@@ -885,16 +885,16 @@ const notifyTime = notifyPreferencesResult.status === "fulfilled" ? notifyPrefer
     }
 
     function setCarddavBusy(busy) {
-      for (const btn of [carddavSaveBtn, carddavSyncBtn, carddavDisconnectBtn]) btn.disabled = busy;
+      for (const btn of [carddav保存Btn, carddavSyncBtn, carddavDisconnectBtn]) btn.disabled = busy;
     }
 
     if (initialCarddav) {
       carddavUrl.value = initialCarddav.url;
-      carddavUsername.value = initialCarddav.username;
+      carddav用户名.value = initialCarddav.username;
     }
     renderCarddav(initialCarddav);
 
-    carddavSaveBtn.addEventListener("click", async () => {
+    carddav保存Btn.addEventListener("click", async () => {
       const url = carddavUrl.value.trim();
       if (!url) {
         carddavSay("Enter the address book URL", true);
@@ -902,14 +902,14 @@ const notifyTime = notifyPreferencesResult.status === "fulfilled" ? notifyPrefer
       }
       setCarddavBusy(true);
       try {
-        const body = { url, username: carddavUsername.value.trim() };
-        if (carddavPassword.value) body.password = carddavPassword.value;
+        const body = { url, username: carddav用户名.value.trim() };
+        if (carddav密码.value) body.password = carddav密码.value;
         const saved = await carddavRequest("", {
           method: "PUT",
           headers: { "Content-Type": "application/json" },
           body: JSON.stringify(body),
         });
-        carddavPassword.value = "";
+        carddav密码.value = "";
         renderCarddav(saved);
         await runCarddavSync();
       } catch (e) {
@@ -926,7 +926,7 @@ const notifyTime = notifyPreferencesResult.status === "fulfilled" ? notifyPrefer
     });
 
     carddavDisconnectBtn.addEventListener("click", () => {
-      carddavDeleteCards.checked = false;
+      carddav删除Cards.checked = false;
       carddavDisconnectModal.classList.remove("hidden");
     });
     function closeCarddavDisconnectModal() {
@@ -937,11 +937,11 @@ const notifyTime = notifyPreferencesResult.status === "fulfilled" ? notifyPrefer
     carddavConfirmBtn.addEventListener("click", async () => {
       carddavConfirmBtn.disabled = true;
       try {
-        const data = await carddavRequest(`?delete_cards=${carddavDeleteCards.checked}`, { method: "DELETE" });
-        carddavUrl.value = carddavUsername.value = carddavPassword.value = "";
+        const data = await carddavRequest(`?delete_cards=${carddav删除Cards.checked}`, { method: "DELETE" });
+        carddavUrl.value = carddav用户名.value = carddav密码.value = "";
         renderCarddav(null);
         carddavSay(
-          carddavDeleteCards.checked
+          carddav删除Cards.checked
             ? `Disconnected. ${plural(data.cards, "card")} deleted.`
             : `Disconnected. ${plural(data.cards, "card")} kept.`,
           false
@@ -973,8 +973,8 @@ const notifyTime = notifyPreferencesResult.status === "fulfilled" ? notifyPrefer
     document.getElementById("delete-modal-backdrop")?.addEventListener("click", closeModal);
 
     deleteBtn?.addEventListener("click", async () => {
-      const password = hasPassword ? document.getElementById("delete-password")?.value : undefined;
-      if (hasPassword && !password) {
+      const password = has密码 ? document.getElementById("delete-password")?.value : undefined;
+      if (has密码 && !password) {
         deleteError.textContent = "Enter your password to confirm";
         deleteError.classList.remove("hidden");
         return;
@@ -1000,37 +1000,37 @@ const notifyTime = notifyPreferencesResult.status === "fulfilled" ? notifyPrefer
         deleteError.textContent = e.message;
         deleteError.classList.remove("hidden");
         deleteBtn.disabled = false;
-        deleteBtn.textContent = "Delete account";
+        deleteBtn.textContent = "删除 account";
       }
     });
 
     // ── Delete all events ──
     const eventsModal = document.getElementById("delete-events-modal");
-    const deleteEventsError = document.getElementById("delete-events-error");
-    const deleteEventsBtn = document.getElementById("delete-events-confirm-btn");
+    const delete事件Error = document.getElementById("delete-events-error");
+    const delete事件Btn = document.getElementById("delete-events-confirm-btn");
 
-    function openEventsModal() {
-      deleteEventsError.classList.add("hidden");
+    function open事件Modal() {
+      delete事件Error.classList.add("hidden");
       eventsModal.classList.remove("hidden");
     }
-    function closeEventsModal() {
+    function close事件Modal() {
       eventsModal.classList.add("hidden");
     }
 
-    document.getElementById("open-delete-events-modal")?.addEventListener("click", openEventsModal);
-    document.getElementById("delete-events-cancel-btn")?.addEventListener("click", closeEventsModal);
-    document.getElementById("delete-events-modal-backdrop")?.addEventListener("click", closeEventsModal);
+    document.getElementById("open-delete-events-modal")?.addEventListener("click", open事件Modal);
+    document.getElementById("delete-events-cancel-btn")?.addEventListener("click", close事件Modal);
+    document.getElementById("delete-events-modal-backdrop")?.addEventListener("click", close事件Modal);
 
-    deleteEventsBtn?.addEventListener("click", async () => {
-      const password = hasPassword ? document.getElementById("delete-events-password")?.value : undefined;
-      if (hasPassword && !password) {
-        deleteEventsError.textContent = "Enter your password to confirm";
-        deleteEventsError.classList.remove("hidden");
+    delete事件Btn?.addEventListener("click", async () => {
+      const password = has密码 ? document.getElementById("delete-events-password")?.value : undefined;
+      if (has密码 && !password) {
+        delete事件Error.textContent = "Enter your password to confirm";
+        delete事件Error.classList.remove("hidden");
         return;
       }
 
-      deleteEventsBtn.disabled = true;
-      deleteEventsBtn.textContent = "Deleting…";
+      delete事件Btn.disabled = true;
+      delete事件Btn.textContent = "Deleting…";
 
       try {
         const res = await fetch("/api/people", {
@@ -1046,10 +1046,10 @@ const notifyTime = notifyPreferencesResult.status === "fulfilled" ? notifyPrefer
         }
         window.location.href = "/";
       } catch (e) {
-        deleteEventsError.textContent = e.message;
-        deleteEventsError.classList.remove("hidden");
-        deleteEventsBtn.disabled = false;
-        deleteEventsBtn.textContent = "Delete all events";
+        delete事件Error.textContent = e.message;
+        delete事件Error.classList.remove("hidden");
+        delete事件Btn.disabled = false;
+        delete事件Btn.textContent = "删除 all events";
       }
     });
 
@@ -1204,7 +1204,7 @@ const notifyTime = notifyPreferencesResult.status === "fulfilled" ? notifyPrefer
           const data = await res.json().catch(() => ({}));
           throw new Error(data.detail || "Could not save");
         }
-        showStatus("notify-time", "Saved.", false);
+        showStatus("notify-time", "保存d.", false);
       } catch (e) {
         showStatus("notify-time", e.message, true);
       }
@@ -1227,7 +1227,7 @@ const notifyTime = notifyPreferencesResult.status === "fulfilled" ? notifyPrefer
           const data = await res.json().catch(() => ({}));
           throw new Error(data.detail || "Could not save");
         }
-        showStatus(channel, "Saved.", false);
+        showStatus(channel, "保存d.", false);
       } catch (e) {
         showStatus(channel, e.message, true);
       }
@@ -1288,7 +1288,7 @@ const notifyTime = notifyPreferencesResult.status === "fulfilled" ? notifyPrefer
         return;
       }
       const sub = await getExistingSubscription();
-      webpushToggleBtn.textContent = sub ? "Disable on this device" : "Enable on this device";
+      webpushToggleBtn.textContent = sub ? "Disable on this device" : "在此设备上启用";
       webpushTestBtn.hidden = !sub;
     }
 
@@ -1460,11 +1460,11 @@ const notifyTime = notifyPreferencesResult.status === "fulfilled" ? notifyPrefer
 
       // Deleting breaks the link for everyone who has it, so it asks first.
       const del = iconButton(
-        "Delete",
+        "删除",
         "hover:text-red-600 dark:hover:text-red-400",
         "M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16",
       );
-      del.addEventListener("click", () => openDeleteShare(share, li));
+      del.addEventListener("click", () => open删除Share(share, li));
 
       header.append(toggle, copy, del);
       li.append(header, details);
@@ -1475,10 +1475,10 @@ const notifyTime = notifyPreferencesResult.status === "fulfilled" ? notifyPrefer
     const deleteShareModal = document.getElementById("delete-share-modal");
     const deleteShareName = document.getElementById("delete-share-name");
     const deleteShareConfirm = document.getElementById("delete-share-confirm-btn");
-    let pendingDelete = null;
+    let pending删除 = null;
 
-    function openDeleteShare(share, row) {
-      pendingDelete = { share, row };
+    function open删除Share(share, row) {
+      pending删除 = { share, row };
       deleteShareName.textContent = share.name;
       const wasHidden = deleteShareModal.classList.contains("hidden");
       deleteShareModal.classList.remove("hidden");
@@ -1486,16 +1486,16 @@ const notifyTime = notifyPreferencesResult.status === "fulfilled" ? notifyPrefer
       deleteShareConfirm.focus();
     }
 
-    function closeDeleteShare() {
+    function close删除Share() {
       const wasVisible = !deleteShareModal.classList.contains("hidden");
       deleteShareModal.classList.add("hidden");
-      pendingDelete = null;
+      pending删除 = null;
       if (wasVisible) unlockScroll();
     }
 
     deleteShareConfirm.addEventListener("click", async () => {
-      if (!pendingDelete) return;
-      const { share, row } = pendingDelete;
+      if (!pending删除) return;
+      const { share, row } = pending删除;
       deleteShareConfirm.disabled = true;
       try {
         const res = await fetch(`/api/shares/${share.id}`, { method: "DELETE" });
@@ -1507,13 +1507,13 @@ const notifyTime = notifyPreferencesResult.status === "fulfilled" ? notifyPrefer
         showToast(e.message, "error");
       } finally {
         deleteShareConfirm.disabled = false;
-        closeDeleteShare();
+        close删除Share();
       }
     });
-    document.getElementById("delete-share-cancel-btn").addEventListener("click", closeDeleteShare);
-    document.getElementById("delete-share-backdrop").addEventListener("click", closeDeleteShare);
+    document.getElementById("delete-share-cancel-btn").addEventListener("click", close删除Share);
+    document.getElementById("delete-share-backdrop").addEventListener("click", close删除Share);
     document.addEventListener("keydown", (e) => {
-      if (e.key === "Escape" && !deleteShareModal.classList.contains("hidden")) closeDeleteShare();
+      if (e.key === "Escape" && !deleteShareModal.classList.contains("hidden")) close删除Share();
     });
 
     // Loaded client-side rather than at render so the links (the secret) are
