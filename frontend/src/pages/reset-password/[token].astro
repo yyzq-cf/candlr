@@ -3,7 +3,7 @@ import Layout from "../../layouts/Layout.astro";
 import ThemeToggle from "../../components/ThemeToggle.astro";
 import Logo from "../../components/Logo.astro";
 import AuthHero from "../../components/AuthHero.astro";
-import PasswordInput from "../../components/PasswordInput.astro";
+import 密码Input from "../../components/密码Input.astro";
 
 if (Astro.cookies.get("candlr_token")?.value) {
   return Astro.redirect("/");
@@ -12,7 +12,7 @@ if (Astro.cookies.get("candlr_token")?.value) {
 const { token } = Astro.params;
 ---
 
-<Layout title="Reset password">
+<Layout title="重置密码">
   <div class="min-h-dvh grid md:grid-cols-2">
     <AuthHero />
 
@@ -32,19 +32,19 @@ const { token } = Astro.params;
         <div class="card p-6 space-y-4" id="form-card">
           <div id="error-msg" class="hidden bg-red-50 dark:bg-red-500/10 text-red-600 dark:text-red-400 text-sm px-3.5 py-2.5 rounded-lg"></div>
           <div>
-            <label class="label" for="new-password">New password</label>
-            <PasswordInput id="new-password" autocomplete="new-password" placeholder="••••••••" />
+            <label class="label" for="new-password">新密码</label>
+            <密码Input id="new-password" autocomplete="new-password" placeholder="••••••••" />
           </div>
           <div>
-            <label class="label" for="confirm-password">Confirm new password</label>
-            <PasswordInput id="confirm-password" autocomplete="new-password" placeholder="••••••••" />
+            <label class="label" for="confirm-password">确认新密码</label>
+            <密码Input id="confirm-password" autocomplete="new-password" placeholder="••••••••" />
           </div>
-          <button id="submit-btn" class="btn-primary w-full mt-1">Reset password</button>
+          <button id="submit-btn" class="btn-primary w-full mt-1">重置密码</button>
         </div>
 
         <div class="card p-6 hidden" id="success-card">
-          <p class="text-sm text-zinc-600 dark:text-zinc-400 mb-3">Your password has been updated.</p>
-          <a href="/login" class="btn-primary inline-block">Sign in</a>
+          <p class="text-sm text-zinc-600 dark:text-zinc-400 mb-3">您的密码已更新。</p>
+          <a href="/login" class="btn-primary inline-block">登录</a>
         </div>
       </div>
     </div>
@@ -57,13 +57,13 @@ const { token } = Astro.params;
     const successCard = document.getElementById("success-card");
 
     async function submit() {
-      const newPassword = document.getElementById("new-password").value;
-      const confirmPassword = document.getElementById("confirm-password").value;
+      const new密码 = document.getElementById("new-password").value;
+      const confirm密码 = document.getElementById("confirm-password").value;
 
       errEl.classList.add("hidden");
-      if (!newPassword || !confirmPassword) return;
-      if (newPassword !== confirmPassword) {
-        errEl.textContent = "Passwords do not match";
+      if (!new密码 || !confirm密码) return;
+      if (new密码 !== confirm密码) {
+        errEl.textContent = "两次密码不一致";
         errEl.classList.remove("hidden");
         return;
       }
@@ -75,7 +75,7 @@ const { token } = Astro.params;
         const res = await fetch(`/api/auth/reset-password/${encodeURIComponent(token)}`, {
           method: "POST",
           headers: { "Content-Type": "application/json" },
-          body: JSON.stringify({ new_password: newPassword }),
+          body: JSON.stringify({ new_password: new密码 }),
         });
         if (!res.ok) {
           const text = await res.text();
@@ -89,7 +89,7 @@ const { token } = Astro.params;
         errEl.textContent = e.message;
         errEl.classList.remove("hidden");
         btn.disabled = false;
-        btn.textContent = "Reset password";
+        btn.textContent = "重置密码";
       }
     }
 
