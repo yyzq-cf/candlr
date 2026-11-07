@@ -15,11 +15,10 @@ jobs:
     timeout-minutes: 45
     permissions:
       contents: read
-      packages: write
 
     steps:
       - name: Checkout
-        uses: actions/checkout@v4
+        uses: actions/checkout@v5
         with:
           persist-credentials: false
 
@@ -43,7 +42,6 @@ jobs:
           push: true
           tags: |
             ywsj/candlr:latest
-            ghcr.io/${{ github.repository }}:latest
           labels: |
             org.opencontainers.image.source=${{ github.server_url }}/${{ github.repository }}
             org.opencontainers.image.revision=${{ github.sha }}
