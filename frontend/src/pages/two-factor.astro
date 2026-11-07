@@ -5,7 +5,7 @@ import Logo from "../components/Logo.astro";
 import AuthHero from "../components/AuthHero.astro";
 ---
 
-<Layout title="Two-factor authentication">
+<Layout title="两步验证">
   <div class="min-h-dvh grid md:grid-cols-2">
     <AuthHero />
 
@@ -19,7 +19,7 @@ import AuthHero from "../components/AuthHero.astro";
           <div class="md:hidden mb-4">
             <Logo size="md" />
           </div>
-          <h1 class="text-lg font-semibold tracking-tight">Verify your sign-in</h1>
+          <h1 class="text-lg font-semibold tracking-tight">验证您的登录</h1>
           <p class="text-zinc-600 dark:text-zinc-300 mt-1 text-sm">Enter the six-digit code from your authenticator app, or use one of your recovery codes.</p>
         </div>
 
@@ -30,11 +30,11 @@ import AuthHero from "../components/AuthHero.astro";
             <label class="label" for="verification-code">Authenticator or recovery code</label>
             <input id="verification-code" class="input" autocomplete="one-time-code" autocapitalize="none" spellcheck="false" required maxlength="64" autofocus tabindex="1" />
           </div>
-          <button id="verify-btn" class="btn-primary w-full mt-1" tabindex="2">Verify</button>
+          <button id="verify-btn" class="btn-primary w-full mt-1" tabindex="2">验证</button>
         </div>
 
         <p class="text-sm text-zinc-600 dark:text-zinc-300 mt-4">
-          <a href="/login" class="text-zinc-900 dark:text-zinc-100 font-medium hover:underline">Back to sign in</a>
+          <a href="/login" class="text-zinc-900 dark:text-zinc-100 font-medium hover:underline">返回登录</a>
         </p>
       </div>
     </div>
@@ -50,7 +50,7 @@ import AuthHero from "../components/AuthHero.astro";
       if (!code) return;
 
       btn.disabled = true;
-      btn.textContent = "Verifying…";
+      btn.textContent = "验证ing…";
       errEl.classList.add("hidden");
 
       try {
@@ -67,7 +67,7 @@ import AuthHero from "../components/AuthHero.astro";
         errEl.textContent = e.message;
         errEl.classList.remove("hidden");
         btn.disabled = false;
-        btn.textContent = "Verify";
+        btn.textContent = "验证";
       }
     }
 
