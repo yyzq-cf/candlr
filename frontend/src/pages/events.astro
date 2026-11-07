@@ -27,7 +27,7 @@ const eventTypes = eventTypesResult.status === "fulfilled" ? eventTypesResult.va
 const people = peopleResult.status === "fulfilled" ? peopleResult.value : [];
 ---
 
-<Layout title="Events" user={{ username, is_admin }} activePage="events">
+<Layout title="事件" user={{ username, is_admin }} activePage="events">
   <main id="events-main" class="max-w-5xl mx-auto px-4 sm:px-6 py-8">
     <div class="flex items-center justify-between gap-4 mb-6 flex-wrap">
       <div class="relative flex items-center justify-end gap-1.5 sm:gap-2 w-full min-w-0">
@@ -51,7 +51,7 @@ const people = peopleResult.status === "fulfilled" ? peopleResult.value : [];
         </div>
         <div id="dashboard-actions" class="flex items-center justify-end gap-1.5 sm:gap-2 flex-1 min-w-0 transition-opacity duration-200 motion-reduce:transition-none">
         <select id="sort-select" class="select flex-1 min-w-0 max-w-36">
-          <option value="upcoming">Upcoming</option>
+          <option value="upcoming">即将到来</option>
           <option value="name">A - Z</option>
         </select>
         <button id="select-mode-btn" type="button" class="icon-button btn-secondary flex items-center justify-center gap-2 flex-shrink-0" aria-pressed="false" aria-label="Select">
@@ -60,7 +60,7 @@ const people = peopleResult.status === "fulfilled" ? peopleResult.value : [];
           </svg>
           <span id="select-mode-label" class="hidden sm:inline">Select</span>
         </button>
-        <button id="add-date-btn" class="btn-primary flex-shrink-0">+ Add</button>
+        <button id="add-date-btn" class="btn-primary flex-shrink-0">+ 添加</button>
         </div>
       </div>
     </div>
@@ -68,8 +68,8 @@ const people = peopleResult.status === "fulfilled" ? peopleResult.value : [];
     <p id="search-status" class="sr-only" role="status" aria-live="polite" aria-atomic="true"></p>
 
     <div id="empty-state" class="hidden card p-10 text-center">
-      <p class="text-sm text-zinc-600 dark:text-zinc-300 mb-4">No dates yet. Add the first one to get started.</p>
-      <button class="btn-primary" id="empty-add-date-btn">+ Add</button>
+      <p class="text-sm text-zinc-600 dark:text-zinc-300 mb-4">还没有日期。添加第一个开始吧。</p>
+      <button class="btn-primary" id="empty-add-date-btn">+ 添加</button>
     </div>
 
     <div id="no-results" class="hidden card p-10 text-center">
@@ -87,17 +87,17 @@ const people = peopleResult.status === "fulfilled" ? peopleResult.value : [];
       <div class="flex items-center gap-1.5 sm:contents">
         <span id="bulk-count" class="flex-1 sm:flex-none text-sm font-medium px-2 tabular-nums" role="status" aria-live="polite">0 selected</span>
         <button id="bulk-all-btn" type="button" class="btn-ghost text-sm py-1.5">Select all</button>
-        <button id="bulk-cancel-btn" type="button" class="btn-ghost p-2 sm:py-1.5 sm:px-3 sm:order-4 text-sm" aria-label="Cancel selection">
+        <button id="bulk-cancel-btn" type="button" class="btn-ghost p-2 sm:py-1.5 sm:px-3 sm:order-4 text-sm" aria-label="取消 selection">
           <svg xmlns="http://www.w3.org/2000/svg" class="w-4 h-4 sm:hidden" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2" aria-hidden="true">
             <path stroke-linecap="round" stroke-linejoin="round" d="M6 18L18 6M6 6l12 12" />
           </svg>
-          <span class="hidden sm:inline">Cancel</span>
+          <span class="hidden sm:inline">取消</span>
         </button>
       </div>
       <div class="grid grid-cols-3 gap-1.5 sm:contents">
         <button id="bulk-type-btn" type="button" class="btn-secondary text-sm px-2 sm:px-3 py-2 sm:order-3 whitespace-nowrap" disabled>Change type</button>
         <button id="bulk-notify-btn" type="button" class="btn-secondary text-sm px-2 sm:px-3 py-2 sm:order-3" disabled>Reminders</button>
-        <button id="bulk-delete-btn" type="button" class="btn-secondary text-sm px-2 sm:px-3 py-2 sm:order-3 text-red-600 dark:text-red-400" disabled>Delete</button>
+        <button id="bulk-delete-btn" type="button" class="btn-secondary text-sm px-2 sm:px-3 py-2 sm:order-3 text-red-600 dark:text-red-400" disabled>删除</button>
       </div>
     </div>
   </div>
@@ -130,11 +130,11 @@ const people = peopleResult.status === "fulfilled" ? peopleResult.value : [];
       </div>
 
       <div class="flex flex-wrap gap-2 justify-end">
-        <button type="button" class="bulk-cancel btn-secondary">Cancel</button>
+        <button type="button" class="bulk-cancel btn-secondary">取消</button>
         <button id="bulk-notify-off-btn" type="button" class="hidden btn-secondary">Turn off</button>
         <button id="bulk-notify-on-btn" type="button" class="hidden btn-primary">Turn on</button>
         <button id="bulk-type-confirm-btn" type="button" class="hidden btn-primary">Change type</button>
-        <button id="bulk-delete-confirm-btn" type="button" class="hidden text-sm font-medium px-4 py-2.5 rounded-lg bg-red-600 hover:bg-red-500 text-white transition-colors disabled:opacity-50">Delete</button>
+        <button id="bulk-delete-confirm-btn" type="button" class="hidden text-sm font-medium px-4 py-2.5 rounded-lg bg-red-600 hover:bg-red-500 text-white transition-colors disabled:opacity-50">删除</button>
       </div>
     </div>
   </div>
@@ -145,7 +145,7 @@ const people = peopleResult.status === "fulfilled" ? peopleResult.value : [];
     <div class="relative bg-surface dark:bg-surface-dark w-full min-w-0 max-w-full sm:max-w-md rounded-t-2xl sm:rounded-2xl max-h-[92dvh] overflow-y-auto p-6">
       <div class="flex items-center justify-between mb-4">
         <h2 id="form-title" class="text-base font-semibold">Add a date</h2>
-        <button type="button" class="form-close icon-button btn-ghost p-1.5" aria-label="Close">
+        <button type="button" class="form-close icon-button btn-ghost p-1.5" aria-label="关闭">
           <svg xmlns="http://www.w3.org/2000/svg" class="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
             <path stroke-linecap="round" stroke-linejoin="round" d="M6 18L18 6M6 6l12 12" />
           </svg>
@@ -225,7 +225,7 @@ const people = peopleResult.status === "fulfilled" ? peopleResult.value : [];
           <div id="form-image-error" class="hidden bg-red-50 dark:bg-red-500/10 text-red-600 dark:text-red-400 text-xs px-3 py-2 rounded-lg mt-2"></div>
         </div>
 
-        <button id="form-submit-btn" class="btn-primary w-full mt-1">Save</button>
+        <button id="form-submit-btn" class="btn-primary w-full mt-1">保存</button>
       </div>
     </div>
   </div>
@@ -257,7 +257,7 @@ const people = peopleResult.status === "fulfilled" ? peopleResult.value : [];
       </div>
       <p class="text-xs text-zinc-600 dark:text-zinc-300 mb-4">Drag the photo to reposition it, use the slider to zoom.</p>
       <div class="flex gap-2 justify-end">
-        <button type="button" data-editor-cancel class="btn-secondary">Cancel</button>
+        <button type="button" data-editor-cancel class="btn-secondary">取消</button>
         <button type="button" data-editor-confirm class="btn-primary">Use photo</button>
       </div>
     </div>
@@ -435,8 +435,8 @@ import { cardBellHtml } from "../lib/reminders.js";
     const bulkNotifyOnBtn = document.getElementById("bulk-notify-on-btn");
     const bulkNotifyOffBtn = document.getElementById("bulk-notify-off-btn");
     const bulkTypeConfirmBtn = document.getElementById("bulk-type-confirm-btn");
-    const bulkDeleteConfirmBtn = document.getElementById("bulk-delete-confirm-btn");
-    const bulkPaneButtons = [bulkNotifyOnBtn, bulkNotifyOffBtn, bulkTypeConfirmBtn, bulkDeleteConfirmBtn];
+    const bulk删除ConfirmBtn = document.getElementById("bulk-delete-confirm-btn");
+    const bulkPaneButtons = [bulkNotifyOnBtn, bulkNotifyOffBtn, bulkTypeConfirmBtn, bulk删除ConfirmBtn];
 
     function plural(n, word) {
       return `${n} ${word}${n === 1 ? "" : "s"}`;
@@ -520,9 +520,9 @@ import { cardBellHtml } from "../lib/reminders.js";
         bulkNotifyOffBtn.classList.remove("hidden");
         bulkNotifyOnBtn.classList.remove("hidden");
       } else {
-        bulkTitle.textContent = `Delete ${cards}?`;
+        bulkTitle.textContent = `删除 ${cards}?`;
         bulkMessage.textContent = "This permanently deletes them along with all of their dates. This cannot be undone.";
-        bulkDeleteConfirmBtn.classList.remove("hidden");
+        bulk删除ConfirmBtn.classList.remove("hidden");
       }
       bulkModal.classList.remove("hidden");
     }
@@ -576,8 +576,8 @@ import { cardBellHtml } from "../lib/reminders.js";
     bulkNotifyOffBtn.addEventListener("click", () =>
       runBulk({ action: "set_notify", notify: false }, bulkNotifyOffBtn, (r) => `Reminders off for ${plural(r.dates, "date")}`),
     );
-    bulkDeleteConfirmBtn.addEventListener("click", () =>
-      runBulk({ action: "delete" }, bulkDeleteConfirmBtn, (r) => `Deleted ${plural(r.people, "card")}`),
+    bulk删除ConfirmBtn.addEventListener("click", () =>
+      runBulk({ action: "delete" }, bulk删除ConfirmBtn, (r) => `删除d ${plural(r.people, "card")}`),
     );
 
     document.addEventListener("keydown", (event) => {
@@ -616,11 +616,11 @@ import { cardBellHtml } from "../lib/reminders.js";
     const formImageEditBtn = document.getElementById("form-image-edit-btn");
     const formImageRemoveBtn = document.getElementById("form-image-remove-btn");
     const formImageError = document.getElementById("form-image-error");
-    const formSubmitBtn = document.getElementById("form-submit-btn");
+    const form提交Btn = document.getElementById("form-submit-btn");
 
     const formDatePicker = document.getElementById("form-date-picker");
     const formDateButtons = document.getElementById("form-date-buttons");
-    let draftEvents = [];
+    let draft事件 = [];
     let selectedEventIndex = 0;
     let existingImageUrl = null;
     let removeExistingImage = false;
@@ -663,7 +663,7 @@ import { cardBellHtml } from "../lib/reminders.js";
       pendingImageSourceBlob = null;
       existingImageUrl = null;
       removeExistingImage = false;
-      draftEvents = [];
+      draft事件 = [];
       selectedEventIndex = 0;
       formDatePicker.classList.add("hidden");
       formDateButtons.replaceChildren();
@@ -680,36 +680,36 @@ import { cardBellHtml } from "../lib/reminders.js";
         formNameField.classList.remove("hidden");
         formAddressField.classList.remove("hidden");
         formImageFields.classList.remove("hidden");
-        formSubmitBtn.textContent = "Save";
+        form提交Btn.textContent = "保存";
       } else if (mode === "add-event") {
-        formTitle.textContent = "Add another date";
+        formTitle.textContent = "添加日期";
         formNameField.classList.add("hidden");
         formAddressField.classList.add("hidden");
         formImageFields.classList.add("hidden");
-        formSubmitBtn.textContent = "Save";
+        form提交Btn.textContent = "保存";
       } else if (mode === "edit-card") {
-        formTitle.textContent = "Edit card";
+        formTitle.textContent = "编辑卡片";
         formNameField.classList.remove("hidden");
         formAddressField.classList.remove("hidden");
         formImageFields.classList.remove("hidden");
-        formSubmitBtn.textContent = "Save changes";
+        form提交Btn.textContent = "保存 changes";
         formName.value = context.person.name;
         formAddress.value = context.person.address ?? "";
         existingImageUrl = context.person.image_url;
         setFormImagePreview(null);
-        draftEvents = context.person.events.map((ev) => ({
+        draft事件 = context.person.events.map((ev) => ({
           id: ev.id, event_type_id: ev.event_type.id, month: ev.month, day: ev.day,
           year: ev.year, year_known: ev.year_known, notes: ev.notes, notify: ev.notify,
         }));
-        selectedEventIndex = Math.max(0, draftEvents.findIndex((ev) => ev.id === context.event?.id));
-        formDatePicker.classList.toggle("hidden", draftEvents.length < 2);
+        selectedEventIndex = Math.max(0, draft事件.findIndex((ev) => ev.id === context.event?.id));
+        formDatePicker.classList.toggle("hidden", draft事件.length < 2);
         for (const [index, ev] of context.person.events.entries()) {
           const button = document.createElement("button");
           button.type = "button";
           button.className = "btn-secondary text-xs";
           button.textContent = `${index + 1}. ${ev.event_type.name}`;
           button.addEventListener("click", () => {
-            draftEvents[selectedEventIndex] = { id: draftEvents[selectedEventIndex].id, ...eventPayload() };
+            draft事件[selectedEventIndex] = { id: draft事件[selectedEventIndex].id, ...eventPayload() };
             selectedEventIndex = index;
             showDraftEvent();
           });
@@ -724,7 +724,7 @@ import { cardBellHtml } from "../lib/reminders.js";
     }
 
     function showDraftEvent() {
-      const ev = draftEvents[selectedEventIndex];
+      const ev = draft事件[selectedEventIndex];
       formEventType.value = String(ev.event_type_id);
       formMonth.value = String(ev.month);
       formDay.value = String(ev.day);
@@ -741,7 +741,7 @@ import { cardBellHtml } from "../lib/reminders.js";
     }
 
     function closeFormModal() {
-      if (formSubmitBtn.disabled) return;
+      if (form提交Btn.disabled) return;
       const wasVisible = !formModal.classList.contains("hidden");
       formModal.classList.add("hidden");
       if (wasVisible) unlockScroll();
@@ -859,9 +859,9 @@ import { cardBellHtml } from "../lib/reminders.js";
       };
     }
 
-    formSubmitBtn.addEventListener("click", async () => {
+    form提交Btn.addEventListener("click", async () => {
       formError.classList.add("hidden");
-      formSubmitBtn.disabled = true;
+      form提交Btn.disabled = true;
       try {
         if (formMode === "create") {
           const name = formName.value.trim();
@@ -892,11 +892,11 @@ import { cardBellHtml } from "../lib/reminders.js";
         } else if (formMode === "edit-card") {
           const name = formName.value.trim();
           if (!name) throw new Error("Name is required");
-          draftEvents[selectedEventIndex] = { id: draftEvents[selectedEventIndex].id, ...eventPayload() };
+          draft事件[selectedEventIndex] = { id: draft事件[selectedEventIndex].id, ...eventPayload() };
           const res = await fetch(`/api/people/${formContext.personId}`, {
             method: "PUT",
             headers: { "Content-Type": "application/json" },
-            body: JSON.stringify({ name, address: formAddress.value.trim() || null, events: draftEvents }),
+            body: JSON.stringify({ name, address: formAddress.value.trim() || null, events: draft事件 }),
           });
           if (!res.ok) {
             const data = await res.json().catch(() => ({}));
@@ -916,7 +916,7 @@ import { cardBellHtml } from "../lib/reminders.js";
           }
         }
 
-        formSubmitBtn.disabled = false;
+        form提交Btn.disabled = false;
         closeFormModal();
         await refreshPeople();
         if (formContext.personId || formContext.event) {
@@ -926,7 +926,7 @@ import { cardBellHtml } from "../lib/reminders.js";
         formError.textContent = e.message;
         formError.classList.remove("hidden");
       } finally {
-        formSubmitBtn.disabled = false;
+        form提交Btn.disabled = false;
       }
     });
 
@@ -935,8 +935,8 @@ import { cardBellHtml } from "../lib/reminders.js";
       onEditCard: (person) => openFormModal("edit-card", { personId: person.id, person }),
       onEditEvent: (person, event) => openFormModal("edit-card", { event, personId: person.id, person }),
       onAddEvent: (personId) => openFormModal("add-event", { personId }),
-      onDeleteEvent: () => refreshPeople(),
-      onDeletePerson: () => refreshPeople(),
+      on删除Event: () => refreshPeople(),
+      on删除Person: () => refreshPeople(),
     });
 
     // Dashboard and calendar links share the same editing UI here: ?open=
