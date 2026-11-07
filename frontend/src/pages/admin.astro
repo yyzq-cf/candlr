@@ -1,6 +1,6 @@
 ---
 import Layout from "../layouts/Layout.astro";
-import 密码Input from "../components/密码Input.astro";
+import PasswordInput from "../components/PasswordInput.astro";
 import { apiJson, isUnauthorized, backendUnavailable } from "../lib/api";
 
 const cookies = Astro.request.headers.get("cookie") ?? "";
@@ -140,7 +140,7 @@ const users = (await apiJson<管理User[]>("/settings/users", { cookies }).catch
             </div>
             <div>
               <label class="label" for="new-user-password">密码</label>
-              <密码Input id="new-user-password" autocomplete="new-password" />
+              <PasswordInput id="new-user-password" autocomplete="new-password" />
             </div>
             <button id="add-user-btn" type="button" class="btn-primary">Add user</button>
           </div>
@@ -175,7 +175,7 @@ const users = (await apiJson<管理User[]>("/settings/users", { cookies }).catch
     const addUserBtn = document.getElementById("add-user-btn") as HTMLButtonElement;
     const new用户名Input = document.getElementById("new-user-username") as HTMLInputElement;
     const new邮箱Input = document.getElementById("new-user-email") as HTMLInputElement;
-    const new密码Input = document.getElementById("new-user-password") as HTMLInputElement;
+    const newPasswordInput = document.getElementById("new-user-password") as HTMLInputElement;
 
     function userRowHtml(u: { id: number; username: string; email: string }) {
       const username = document.createElement("div");
@@ -243,7 +243,7 @@ const users = (await apiJson<管理User[]>("/settings/users", { cookies }).catch
     addUserBtn?.addEventListener("click", async () => {
       const username = new用户名Input.value.trim();
       const email = new邮箱Input.value.trim();
-      const password = new密码Input.value;
+      const password = newPasswordInput.value;
 
       addUserError.classList.add("hidden");
       if (!username || !email || !password) {
@@ -269,7 +269,7 @@ const users = (await apiJson<管理User[]>("/settings/users", { cookies }).catch
         usersBody.insertAdjacentHTML("beforeend", userRowHtml(created));
         new用户名Input.value = "";
         new邮箱Input.value = "";
-        new密码Input.value = "";
+        newPasswordInput.value = "";
       } catch (e: any) {
         addUserError.textContent = e.message;
         addUserError.classList.remove("hidden");
